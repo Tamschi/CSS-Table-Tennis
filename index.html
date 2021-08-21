@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<!-- This is Table Tennis! The other one is trademarked. -->
+<style>
+	* {
+		box-sizing: border-box;
+		contain: size layout style;
+		transform-style: preserve-3d;
+	}
+
+	html {
+		background: cornflowerblue;
+		overflow: hidden;
+	}
+
+	body {
+		margin: 0;
+	}
+
+	div {
+		position: absolute;
+	}
+
+	#scene {
+		width: 100vw;
+		perspective: 100vw;
+	}
+
+	#playArea {
+		position: absolute;
+		width: 100vw;
+		aspect-ratio: calc(4 / 3);
+
+		transform-origin: center center calc(-100vw / (152.5 / 273) / 2);
+		animation: 10s linear turntable -5s infinite;
+	}
+
+	@keyframes turntable {
+		from {
+			transform: rotateY(-180deg);
+		}
+
+		to {
+			transform: rotateY(180deg);
+		}
+	}
+
+	.side {
+		top: 90%;
+		border-top: 3vw solid white;
+		display: flex;
+		justify-content: center;
+	}
+
+	.legs {
+		border: 3vw solid black;
+		border-bottom-width: 0;
+		height: calc(100vw * 76 / 152.5);
+		width: calc(100% - 10vw + 2px);
+		transform: translateZ(-5vw);
+	}
+
+	.legs::before {
+		content: "";
+		position: absolute;
+		height: 3vw;
+		width: 100%;
+		background: black;
+		top: 50%;
+		box-shadow: 0 0 0 1px black;
+	}
+</style>
+<div id=scene>
+	<div id=playArea>
+		<div id=table>
+			<style>
+				#table {
+					position: absolute;
+					background-color: blue;
+					left: 0;
+					right: 0;
+					bottom: 10%;
+
+					border: 3vw solid white;
+
+					/* https://cornilleau-tabletennis.com.au/table-tennis-table-dimensions */
+					aspect-ratio: calc(152.5 / 273);
+
+					transform-origin: bottom;
+					transform: rotate3d(1, 0, 0, 90deg);
+
+					display: flex;
+					align-items: center;
+					justify-content: center;
+
+					/* Shadows paper over small gaps. Unfortunately plain perfect alignment doesn't seem possible. */
+					box-shadow: 0 0 0 3px white;
+				}
+
+				#table::before {
+					content: "";
+					position: absolute;
+					height: 100%;
+					width: 3vw;
+					background: whitesmoke;
+				}
+
+				#table::after {
+					content: "";
+					position: absolute;
+					width: 100%;
+					height: 3vw;
+					background: whitesmoke;
+				}
+			</style>
+		</div>
+		<div id=net>
+			<style>
+				#net {
+					position: absolute;
+					background: rgba(255, 255, 255, 50%);
+					width: 100vw;
+					aspect-ratio: calc(152.5 / 15.25);
+					bottom: 10%;
+					transform: translateZ(calc(-100vw / (152.5 / 273) / 2));
+
+					border: 10px solid black;
+					border-top-color: transparent;
+					border-bottom: none;
+				}
+			</style>
+		</div>
+		<div id=front class=side>
+			<style>
+				#front {
+					width: 100vw;
+				}
+			</style>
+			<div class=legs></div>
+		</div>
+
+		<div id=back class=side>
+			<style>
+				#back {
+					width: 100vw;
+					transform: translateZ(calc(-100vw / (152.5 / 273))) scaleZ(-1);
+				}
+			</style>
+			<div class=legs></div>
+		</div>
+
+		<div id=left class=side>
+			<style>
+				#left {
+					width: calc(100vw / (152.5 / 273));
+					transform-origin: left;
+					transform: rotateY(90deg) scaleZ(-1);
+				}
+			</style>
+			<div class=legs></div>
+		</div>
+
+		<div id=right class=side>
+			<style>
+				#right {
+					width: calc(100vw / (152.5 / 273));
+					transform-origin: left;
+					transform: rotateY(90deg) translateZ(100vw);
+				}
+			</style>
+			<div class=legs></div>
+		</div>
+	</div>
+</div>
