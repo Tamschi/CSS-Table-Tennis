@@ -1,0 +1,5 @@
+The CSS Table Tennis animation in this repository, found in index.html,
+is licensed under the Creative Commons Attribution 4.0 International Public License,
+which can be found in CC-BY-4.0.txt.
+
+Copyright 2021 Tamme Schichler <tamme@schichler.dev>
