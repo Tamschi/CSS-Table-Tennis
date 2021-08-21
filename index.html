@@ -184,8 +184,8 @@
 
 					animation:
 						0.5s cubic-bezier(0, 0, 0.33, 1) bounce-_additive_ infinite alternate,
-						1s 0.2s linear oppose-_additive_ infinite alternate,
-						7s 0.2s linear evade-_additive_ infinite,
+						1s 0.2s backwards linear oppose-_additive_ infinite alternate,
+						7s 0.2s backwards linear evade-_additive_ infinite,
 						10s linear reverse turntable-_additive_ -5s infinite;
 				}
 
@@ -250,16 +250,51 @@
 </div>
 
 <script>
-	document.getAnimations().forEach(a => {
-		if (a.animationName && a.animationName.indexOf("_additive_") !== -1) {
-			if (!a.effect.composite) {
-				// For now, this will never happen, as the only effect type is KeyframeEffect, which does have this property.
-				// Still, there's an otherwise unchecked type assumption here.
-				throw new Error("Tried to set composite on effect which doesn't have one.");
-			}
+	function patchAdditive() {
+		document.getAnimations().forEach(a => {
+			if (a.animationName && a.animationName.indexOf("_additive_") !== -1) {
+				if (!a.effect.composite) {
+					// For now, this will never happen, as the only effect type is KeyframeEffect, which does have this property.
+					// Still, there's an otherwise unchecked type assumption here.
+					throw new Error("Tried to set composite on effect which doesn't have one.");
+				}
 
-			// Not available from CSS yet 😢
-			a.effect.composite = "add";
-		}
-	});
+				// Not available from CSS yet 😢
+				a.effect.composite = "add";
+			}
+		});
+	}
+	patchAdditive();
 </script>
+
+<button id=toggleMotion onclick="toggleAnimations()">
+	<style>
+		#toggleMotion {
+			visibility: collapse;
+			position: absolute;
+			bottom: -100vh;
+			width: 100%;
+			height: 3em;
+		}
+
+		@media (prefers-reduced-motion) {
+			#toggleMotion {
+				visibility: visible;
+			}
+		}
+	</style>
+	<style id=reducedMotion>
+		@media (prefers-reduced-motion) {
+			* {
+				animation: unset !important;
+			}
+		}
+	</style>
+	Toggle animation (spinning, bouncing)
+	<script>
+		function toggleAnimations() {
+			document.getElementById("reducedMotion").sheet.disabled ^= true;
+			patchAdditive();
+		}
+	</script>
+</button>
