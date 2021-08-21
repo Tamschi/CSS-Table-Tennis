@@ -3,3 +3,8 @@ is licensed under the Creative Commons Attribution 4.0 International Public Lice
 which can be found in CC-BY-4.0.txt.
 
 Copyright 2021 Tamme Schichler <tamme@schichler.dev>
+
+---
+
+GitHub's logo is taken from https://github.com/logos and used under the terms there as of 2021-08-21.
+It's not included in the CC-BY-4.0 license grant above.
