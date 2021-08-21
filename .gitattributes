@@ -9,3 +9,5 @@
 *.yml text eol=lf
 
 .editorconfig text eol=lf
+
+*.png -text
