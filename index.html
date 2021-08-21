@@ -50,6 +50,9 @@
 		border-top: 3vw solid white;
 		display: flex;
 		justify-content: center;
+
+		/* Shadows paper over small gaps. Unfortunately plain perfect alignment doesn't seem possible. */
+		box-shadow: 0 -2px 0 white;
 	}
 
 	.legs {
@@ -93,8 +96,7 @@
 					align-items: center;
 					justify-content: center;
 
-					/* Shadows paper over small gaps. Unfortunately plain perfect alignment doesn't seem possible. */
-					box-shadow: 0 0 0 3px white, inset 0 0 0 1px white;
+					box-shadow: inset 0 0 0 1px white;
 				}
 
 				#table::before {
