@@ -32,10 +32,10 @@
 		aspect-ratio: 4 / 3;
 
 		transform-origin: center center calc(-100vw / (152.5 / 273) / 2);
-		animation: 10s linear turntable -5s infinite;
+		animation: 10s linear turntable-_additive_ -5s infinite;
 	}
 
-	@keyframes turntable {
+	@keyframes turntable-_additive_ {
 		from {
 			transform: rotateY(-180deg);
 		}
@@ -179,59 +179,85 @@
 					border-radius: 50%;
 					box-shadow: 0 0 3vw 1vw white;
 					bottom: 10%;
+
+					animation:
+						0.5s cubic-bezier(0, 0, 0.33, 1) bounce-_additive_ infinite alternate,
+						1s 0.2s linear oppose-_additive_ infinite alternate,
+						7s 0.2s linear evade-_additive_ infinite,
+						10s linear reverse turntable-_additive_ -5s infinite;
+				}
+
+				@keyframes bounce-_additive_ {
+					from {
+						transform: translateY(0);
+					}
+
+					to {
+						transform: translateY(-50vw);
+					}
+				}
+
+				@keyframes oppose-_additive_ {
+					from {
+						transform: translateZ(30vw);
+					}
+
+					to {
+						transform: translateZ(calc(-100vw / (152.5 / 273) - 30vw));
+					}
+				}
+
+				@keyframes evade-_additive_ {
+					/* I wish this was possible without the explicit percentages here. */
+
+					0% {
+						transform: translateX(30vw)
+					}
+
+					14.3% {
+						transform: translateX(100vw)
+					}
+
+					28.6% {
+						transform: translateX(90vw)
+					}
+
+					42.9% {
+						transform: translateX(-10vw)
+					}
+
+					57.1% {
+						transform: translateX(50vw)
+					}
+
+					71.4% {
+						transform: translateX(20vw)
+					}
+
+					85.7% {
+						transform: translateX(120vw)
+					}
+
+					100% {
+						transform: translateX(30vw)
+					}
 				}
 			</style>
-			<script>
-				let ball = document.getElementById("ball");
-
-				ball.animate([{}, { transform: "translateY(-50vw)" }], {
-					duration: 500,
-					composite: "add",
-					iterations: Infinity,
-					easing: "cubic-bezier(0, 0, 0.33, 1)",
-					direction: "alternate",
-					id: "bounce",
-				});
-
-				ball.animate([
-					{ transform: "translateZ(30vw)" },
-					{ transform: "translateZ(calc(-100vw / (152.5 / 273) - 30vw))" },
-				], {
-					duration: 1000,
-					delay: 200,
-					composite: "add",
-					iterations: Infinity,
-					easing: "linear",
-					direction: "alternate",
-					id: "oppose",
-				});
-
-				ball.animate([
-					{ transform: "translateX(30vw)" },
-					{ transform: "translateX(100vw)" },
-					{ transform: "translateX(90vw)" },
-					{ transform: "translateX(-10vw)" },
-					{ transform: "translateX(50vw)" },
-					{ transform: "translateX(20vw)" },
-					{ transform: "translateX(120vw)" },
-					{ transform: "translateX(30vw)" },
-				], {
-					duration: 7000,
-					delay: 200,
-					composite: "add",
-					iterations: Infinity,
-					easing: "linear",
-					id: "evade",
-				});
-
-				ball.animate([{}, { transform: "rotateY(-360deg)" }], {
-					duration: 10000,
-					composite: "add",
-					iterations: Infinity,
-					easing: "linear",
-					id: "billboard",
-				});
-			</script>
 		</div>
 	</div>
 </div>
+
+<script>
+	document.getAnimations().forEach(a => {
+		if (a.animationName && a.animationName.indexOf("_additive_") !== -1) {
+			if (!a.effect.composite) {
+				// For now, this will never happen, as the only effect type is KeyframeEffect, which does have this property.
+				// Still, there's an otherwise unchecked type assumption here.
+				throw new Error("Tried to set composite on effect which doesn't have one.");
+			}
+
+			// Not available from CSS yet 😢
+			a.effect.composite = "add";
+		}
+	});
+</script>
