@@ -170,5 +170,68 @@
 			</style>
 			<div class=legs></div>
 		</div>
+		<div id=ball>
+			<style>
+				#ball {
+					width: 3vw;
+					height: 3vw;
+					background: white;
+					border-radius: 50%;
+					box-shadow: 0 0 3vw 1vw white;
+					bottom: 10%;
+				}
+			</style>
+			<script>
+				let ball = document.getElementById("ball");
+
+				ball.animate([{}, { transform: "translateY(-50vw)" }], {
+					duration: 500,
+					composite: "add",
+					iterations: Infinity,
+					easing: "cubic-bezier(0, 0, 0.33, 1)",
+					direction: "alternate",
+					id: "bounce",
+				});
+
+				ball.animate([
+					{ transform: "translateZ(30vw)" },
+					{ transform: "translateZ(calc(-100vw / (152.5 / 273) - 30vw))" },
+				], {
+					duration: 1000,
+					delay: 200,
+					composite: "add",
+					iterations: Infinity,
+					easing: "linear",
+					direction: "alternate",
+					id: "oppose",
+				});
+
+				ball.animate([
+					{ transform: "translateX(30vw)" },
+					{ transform: "translateX(100vw)" },
+					{ transform: "translateX(90vw)" },
+					{ transform: "translateX(-10vw)" },
+					{ transform: "translateX(50vw)" },
+					{ transform: "translateX(20vw)" },
+					{ transform: "translateX(120vw)" },
+					{ transform: "translateX(30vw)" },
+				], {
+					duration: 7000,
+					delay: 200,
+					composite: "add",
+					iterations: Infinity,
+					easing: "linear",
+					id: "evade",
+				});
+
+				ball.animate([{}, { transform: "rotateY(-360deg)" }], {
+					duration: 10000,
+					composite: "add",
+					iterations: Infinity,
+					easing: "linear",
+					id: "billboard",
+				});
+			</script>
+		</div>
 	</div>
 </div>
