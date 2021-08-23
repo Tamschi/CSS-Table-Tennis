@@ -267,7 +267,7 @@
 					}
 				}
 			</style>
-			<noscript>
+			<no-script>
 				<!--  This is slightly less clean/efficient compared to the scripted setup. -->
 
 				<div>
@@ -281,37 +281,41 @@
 						animation: 0.5s cubic-bezier(0, 0, 0.33, 1) bounce-_additive_ infinite alternate;
 					}
 
-					#ball noscript {
+					#ball no-script {
 						display: block;
 					}
 
-					#ball noscript,
+					#ball no-script,
 					#ball div {
 						width: 100%;
 						height: 100%;
 					}
 
-					#ball>noscript {
+					#ball>no-script {
 						animation: 1s 0.2s backwards linear oppose-_additive_ infinite alternate;
 					}
 
-					#ball>noscript>div {
+					#ball>no-script>div {
 						animation: 7s 0.2s backwards linear evade-_additive_ infinite;
 					}
 
-					#ball>noscript>div>div {
+					#ball>no-script>div>div {
 						background: white;
 						border-radius: 50%;
 						box-shadow: 0 0 3vw 1vw white;
 						animation: 10s linear reverse turntable-_additive_ -5s infinite;
 					}
 				</style>
-			</noscript>
+			</no-script>
 		</div>
 	</div>
 </div>
 
 <script>
+	// It seems the actual <noscript> tag often doesn't become active if scripts are blocked, at least with certain browser extensions.
+	// `.getElementsByTagName`'s result doesn't have `.forEach`.
+	document.querySelectorAll("no-script").forEach(e => e.remove());
+
 	function patchAdditive() {
 		document.getAnimations().forEach(a => {
 			if (a.animationName && a.animationName.indexOf("_additive_") !== -1) {
