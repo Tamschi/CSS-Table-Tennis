@@ -268,6 +268,47 @@
 					}
 				}
 			</style>
+			<noscript>
+				<!--  This is slightly less clean/efficient compared to the scripted setup. -->
+
+				<div>
+					<div> </div>
+				</div>
+
+				<style>
+					#ball {
+						background: none;
+						box-shadow: none;
+						animation: 0.5s cubic-bezier(0, 0, 0.33, 1) bounce-_additive_ infinite alternate;
+					}
+
+					#ball noscript {
+						display: block;
+					}
+
+					#ball noscript,
+					#ball div {
+						width: 100%;
+						height: 100%;
+					}
+
+					#ball>noscript {
+						animation: 1s 0.2s backwards linear oppose-_additive_ infinite alternate;
+					}
+
+					#ball>noscript>div {
+						animation: 7s 0.2s backwards linear evade-_additive_ infinite;
+					}
+
+					#ball>noscript>div>div {
+						background: white;
+						border-radius: 50%;
+						box-shadow: 0 0 3vw 1vw white;
+						transform-origin: center;
+						animation: 10s linear reverse turntable-_additive_ -5s infinite;
+					}
+				</style>
+			</noscript>
 		</div>
 	</div>
 </div>
